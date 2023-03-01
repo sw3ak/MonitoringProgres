@@ -1,0 +1,143 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ReportCard.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:ReportCard.Models"
+		xmlns:conv="clr-namespace:ReportCard.Converters"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
+        x:Class="ReportCard.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ReportCard">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Resources>
+		<conv:ScoreToSolidColorBrushConverter x:Key="scoreToSolidColorBrushConverter"/>
+	</Window.Resources>
+
+	<Window.Styles>
+		<Style Selector="TextBlock.h1">
+			<Setter Property="FontSize" Value="10"/>
+			<Setter Property="FontWeight" Value="Bold"/>
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="Background" Value="YellowGreen"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="TextBlock.h2">
+			<Setter Property="FontSize" Value="10"/>
+			<Setter Property="Margin" Value="5"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+	</Window.Styles>
+	<Grid ColumnDefinitions="*" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+
+		<Grid Grid.Row="0" RowDefinitions="Auto" ColumnDefinitions="3.5*, 3*, 3.5*, 2*, 2*, 2*, 2*">
+			<TextBlock Classes="h1" Text="ФИО" Grid.Column="0"/>
+			<TextBlock Classes="h1" Text="Программирование" Grid.Column="1"/>
+			<TextBlock Classes="h1" Text="Интернет-Технологии" Grid.Column="2"/>
+			<TextBlock Classes="h1" Text="Физика" Grid.Column="3"/>
+			<TextBlock Classes="h1" Text="ТРПО" Grid.Column="4"/>
+			<TextBlock Classes="h1" Text="Математика" Grid.Column="5"/>
+			<TextBlock Classes="h1" Text="Средний&#x0a;балл" Grid.Column="6"/>
+			<Border Grid.Row="0" Grid.Column="0"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="1"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="2"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="3"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="4"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="5"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="6"  BorderBrush="Black"  BorderThickness="1" />
+		</Grid>
+
+		<ListBox Grid.Row="1" Items="{Binding Students}" SelectedIndex="{Binding Index}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid RowDefinitions="Auto" ColumnDefinitions="3.5*, 3*, 3.5*, 2*, 2*, 2*, 2*">
+						<TextBlock Name="NameText" Classes="h1" Text="{Binding Name}" Grid.Column="0"/>
+						<TextBlock Name="VisualProgrammText" Classes="h2" Text="{Binding Prog}" Grid.Column="1"/>
+						<TextBlock Classes="h2" Text="{Binding IT}" Grid.Column="2"/>
+						<TextBlock Classes="h2" Text="{Binding Fisics}" Grid.Column="3"/>
+						<TextBlock Classes="h2" Text="{Binding TRPO}" Grid.Column="4"/>
+						<TextBlock Classes="h2" Text="{Binding Math}" Grid.Column="5"/>
+						<TextBlock Name="AverageSrText" Classes="h2" Text="{Binding Average_Score}" Grid.Column="6"/>
+						<Border Grid.Row="0" Grid.Column="0" />
+						<Border Name="VisualProgrammBorder" ZIndex="-1" Background="{Binding Prog, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="1"  BorderBrush="White"  BorderThickness="1" />
+						<Border ZIndex="-1" Background="{Binding IT, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="2"  BorderBrush="White"  BorderThickness="1" />
+						<Border ZIndex="-1" Background="{Binding Fisics, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="3"  BorderBrush="White"  BorderThickness="1" />
+						<Border ZIndex="-1" Background="{Binding TRPO, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="4"  BorderBrush="White"  BorderThickness="1" />
+						<Border ZIndex="-1" Background="{Binding Math, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="5"  BorderBrush="White"  BorderThickness="1" />
+						<Border Name="AverageSrBorder" ZIndex="-1" Background="{Binding Average_Score, Converter={StaticResource scoreToSolidColorBrushConverter}}" Grid.Row="0" Grid.Column="6"  BorderBrush="White"  BorderThickness="1" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Grid Name="SrGrid" Grid.Row="2" RowDefinitions="Auto" ColumnDefinitions="3.5*, 3*, 3.5*, 2*, 2*, 2*, 2*">
+			<TextBlock Classes="h2" Text="Cредние баллы" Grid.Column="0"/>
+			<TextBlock Name="VisualSrText" Classes="h2" Text="{Binding ScoreProgSr}" Grid.Column="1"/>
+			<TextBlock Classes="h2" Text="{Binding ScoreITSr}" Grid.Column="2"/>
+			<TextBlock Classes="h2" Text="{Binding ScoreFisicsSr}" Grid.Column="3"/>
+			<TextBlock Classes="h2" Text="{Binding ScoreTRPOSr}" Grid.Column="4"/>
+			<TextBlock Classes="h2" Text="{Binding ScoreMathSr}" Grid.Column="5"/>
+			<TextBlock Name="AverageSrText" Classes="h2" Text="{Binding ScoreAverageSr}" Grid.Column="6"/>
+			<Border Grid.Row="0" Grid.Column="0"  BorderBrush="White"  BorderThickness="1" />
+			<Border Name="VisualSrBorder" ZIndex="-1" Background="{Binding ColorProgSr}" Grid.Row="0" Grid.Column="1"  BorderBrush="White"  BorderThickness="1" />
+			<Border ZIndex="-1" Background="{Binding ColorITSr}" Grid.Row="0" Grid.Column="2"  BorderBrush="White"  BorderThickness="1" />
+			<Border ZIndex="-1" Background="{Binding ColorFisicsSr}" Grid.Row="0" Grid.Column="3"  BorderBrush="White"  BorderThickness="1" />
+			<Border ZIndex="-1" Background="{Binding ColorTRPOSr}" Grid.Row="0" Grid.Column="4"  BorderBrush="White"  BorderThickness="1" />
+			<Border ZIndex="-1" Background="{Binding ColorMathSr}" Grid.Row="0" Grid.Column="5"  BorderBrush="White"  BorderThickness="1" />
+			<Border Name="AverageSrBorder" ZIndex="-1" Background="{Binding ColorAverageSr}" Grid.Row="0" Grid.Column="6"  BorderBrush="White"  BorderThickness="1" />
+		</Grid>
+
+		<Grid Grid.Row="3" RowDefinitions="Auto" ColumnDefinitions="3.5*, 3*, 3.5*, 2*, 2*, 2*, 2*">
+			<TextBox Name="TextBoxName" Classes="h2" Grid.Column="0" Text="{Binding NewName}"/>
+			<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" SelectedIndex="{Binding ScoreProg}">
+				<TextBlock>0</TextBlock>
+				<TextBlock>1</TextBlock>
+				<TextBlock>2</TextBlock>
+			</ComboBox>
+			<ComboBox Grid.Column="2" HorizontalAlignment="Stretch" SelectedIndex="{Binding ScoreIT}">
+				<TextBlock>0</TextBlock>
+				<TextBlock>1</TextBlock>
+				<TextBlock>2</TextBlock>
+			</ComboBox>
+			<ComboBox Grid.Column="3" HorizontalAlignment="Stretch" SelectedIndex="{Binding ScoreFisics}">
+				<TextBlock>0</TextBlock>
+				<TextBlock>1</TextBlock>
+				<TextBlock>2</TextBlock>
+			</ComboBox>
+			<ComboBox Grid.Column="4" HorizontalAlignment="Stretch" SelectedIndex="{Binding ScoreTRPO}">
+				<TextBlock>0</TextBlock>
+				<TextBlock>1</TextBlock>
+				<TextBlock>2</TextBlock>
+			</ComboBox>
+			<ComboBox Grid.Column="5" HorizontalAlignment="Stretch" SelectedIndex="{Binding ScoreMath}">
+				<TextBlock>0</TextBlock>
+				<TextBlock>1</TextBlock>
+				<TextBlock>2</TextBlock>
+			</ComboBox>
+			<Border Grid.Row="0" Grid.Column="0"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="1"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="2"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="3"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="4"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="5"  BorderBrush="Black"  BorderThickness="1" />
+			<Border Grid.Row="0" Grid.Column="6"  BorderBrush="Black"  BorderThickness="1" />
+		</Grid>
+
+		<Grid Grid.Row="4" RowDefinitions="Auto" ColumnDefinitions="*, *">
+			<Button Name="AddStudentButton" Grid.Column="0" Content="Добавить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding AddStudent}"/>
+			<Button Name="RemoveStudentButton" Grid.Column="1" Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DeleteStudent}"/>
+		</Grid>
+
+		<Grid Grid.Row="5" RowDefinitions="Auto" ColumnDefinitions="*, *">
+			<Button Name="SaveButton" Grid.Column="0" Content="Сохранить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding Save}"/>
+			<Button Name="LoadButton" Grid.Column="1" Content="Загрузить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding Load}"/>
+		</Grid>
+	</Grid>
+
+</Window>
